@@ -1,0 +1,533 @@
+/* =====================================================================
+   css/styles.css — ShopEasy
+
+
+   ===== MOBILE-FIRST STRATEGY ====
+/* ---------------------------------------------------------------------
+   1. UNIVERSAL SELECTOR ( * )
+--------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------
+   2. TYPE / ELEMENT SELECTOR
+--------------------------------------------------------------------- */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222;
+}
+
+/* MOBILE BASE: smaller padding so the gradient header doesn't eat
+   the whole screen on a phone. Padding grows again in media queries. */
+header {
+  background: linear-gradient(to right, #0a0a4d, navy 60%, #1d1d8f);
+  padding: 1rem 1.25rem;
+  position: relative; /* anchors the absolutely-positioned mobile nav below */
+}
+
+footer {
+  background: linear-gradient(to bottom, navy, #060633);
+  color: #f0f0f0;
+  padding: 2rem 1.5rem;
+}
+
+/* ---------------------------------------------------------------------
+   3. GROUP SELECTOR ( , )
+--------------------------------------------------------------------- */
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h3::first-letter {
+  color: maroon;
+}
+
+/* ---------------------------------------------------------------------
+   4. ID SELECTOR ( # )
+--------------------------------------------------------------------- */
+#site-header {
+  border-bottom: 4px solid #f2c14e;
+}
+
+/* =====================================================================
+   5. HAMBURGER MENU — PURE CSS, NO JAVASCRIPT, NO FRAMEWORK
+   ===================================================================== */
+
+/* Hide the real checkbox itself — we never want to SEE the checkbox,
+   only use its checked/unchecked STATE. */
+.nav-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The visible hamburger icon (3 bars), built from a label + 3 spans —
+   only shown on mobile/tablet; hidden again once desktop nav appears
+   (see the min-width: 900px media query further down). */
+.hamburger {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: white;
+  border-radius: 2px;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* When the checkbox IS checked, morph the 3 bars into an "X".
+   #nav-toggle:checked ~ .hamburger means: "the .hamburger that comes
+   after a CHECKED #nav-toggle, sharing the same parent (<header>)." */
+#nav-toggle:checked ~ .hamburger span:nth-child(1) {
+  transform: translateY(8.5px) rotate(45deg);
+}
+#nav-toggle:checked ~ .hamburger span:nth-child(2) {
+  opacity: 0;
+}
+#nav-toggle:checked ~ .hamburger span:nth-child(3) {
+  transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* MOBILE BASE: the nav menu is HIDDEN by default — collapsed to 0
+   height and clipped, so it doesn't take up space or flash open. */
+#primary-nav {
+  max-height: 0;
+  overflow: hidden;
+  background-color: #0a0a4d;
+  transition: max-height 0.3s ease;
+}
+
+
+/* ---------------------------------------------------------------------
+   6. CLASS SELECTOR ( . )
+   MOBILE BASE: hero and product cards are full width, stacked.
+--------------------------------------------------------------------- */
+.hero {
+  background: linear-gradient(135deg, #f2c14e, #f7a440);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 1.6rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.hero p {
+  font-size: 1rem;
+}
+
+/* MOBILE: no float, full width, one card per row */
+.product-card {
+  width: 100%;
+  margin: 0 0 1.5rem 0;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------------------------------------------------------------------
+   7. DESCENDANT SELECTOR ( space )
+--------------------------------------------------------------------- */
+.featured-products h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------------------------------------------------------------------
+   8. CHILD SELECTOR ( > )
+--------------------------------------------------------------------- */
+.footer-column > h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.05rem;
+  color: #f2c14e;
+}
+
+aside.sidebar > h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: navy;
+  border-bottom: 2px solid #f2c14e;
+  padding-bottom: 0.4rem;
+}
+
+/* ---------------------------------------------------------------------
+   9. ADJACENT / GENERAL SIBLING SELECTORS
+--------------------------------------------------------------------- */
+aside.sidebar h3 + ul {
+  margin-bottom: 0;
+}
+
+aside.sidebar h3 ~ ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------------------------------------------------------------------
+   10. ATTRIBUTE SELECTOR ( [ ] )
+   MOBILE BASE: full-bleed product images.
+--------------------------------------------------------------------- */
+img[alt] {
+  display: block;
+  width: 100%;
+  height: 150px;
+  background-color: #ccc;
+}
+
+button[type="button"] {
+  background: radial-gradient(circle at 30% 30%, #1f1fa0, navy 70%);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  width: 100%; /* full-width tap target on mobile */
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+button[type="button"]:hover {
+  color: red;
+}
+
+a:hover {
+  color: blue;
+}
+a:link {
+  font-size: 1rem; 
+}
+
+a[href="#"] {
+  font-weight: bold;
+}
+
+/* ---------------------------------------------------------------------
+   11. PSEUDO-CLASS SELECTORS ( : )
+--------------------------------------------------------------------- */
+aside.sidebar ul li:hover {
+  color: navy;
+  font-weight: bold;
+}
+
+footer .footer-column ul li:hover {
+  color: #f2c14e;
+}
+
+aside.sidebar ul li:last-child {
+  border-bottom: none;
+}
+
+.product-card:first-child {
+  border-left: 4px solid #f2c14e;
+}
+
+.product-card:nth-child(2) {
+  background-color: #fffaf0;
+}
+
+/* ---------------------------------------------------------------------
+   12. PSEUDO-ELEMENT SELECTORS ( :: )
+--------------------------------------------------------------------- */
+.featured-products h2::before {
+  content: " ";
+}
+
+/* =====================================================================
+   LAYOUT — MOBILE BASE (single column, full width, stacked)
+   ===================================================================== */
+
+.featured-products {
+  background-image: url("../images/kranich17-rain-6243559.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 2rem 1.25rem;
+}
+
+.product-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.product-card .price {
+  font-weight: bold;
+  color: #2a7a2a;
+  margin-bottom: 1rem;
+  display: inline-block;
+  animation: pricePulse 2.2s ease-in-out infinite;
+}
+
+.layout-wrapper {
+  padding: 0 1.25rem 1.5rem 1.25rem;
+}
+
+/* MOBILE: sidebar stacks ABOVE the product listing, full width */
+aside.sidebar {
+  width: 100%;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 1.25rem;
+  margin: 0 0 1.5rem 0;
+}
+
+aside.sidebar h3:not(:first-child) {
+  margin-top: 1.5rem;
+}
+
+/* MOBILE: product listing full width, no float */
+section.product-listing {
+  width: 100%;
+}
+
+section.product-listing h2 {
+  margin-bottom: 1.25rem;
+}
+
+/* MOBILE: footer columns stack full width, one per row */
+footer .footer-column {
+  display: block;
+  width: 100%;
+  margin: 0 0 1.5rem 0;
+}
+
+footer .footer-column:last-child {
+  margin-bottom: 0;
+}
+
+footer .footer-column p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+footer .footer-column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer .footer-column ul li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+footer .footer-copy {
+  font-size: 0.85rem;
+  color: #cfcfcf;
+}
+
+/* =====================================================================
+   ANIMATIONS (unchanged from last class — work the same at all sizes)
+   ===================================================================== */
+
+@keyframes heroFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero h1,
+.hero p {
+  animation: heroFadeInUp 0.8s ease-out both;
+}
+
+.hero p {
+  animation-delay: 0.2s;
+}
+
+@keyframes pricePulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* =====================================================================
+   MEDIA QUERY 1 — min-width: 600px (large phones / small tablets)
+   ===================================================================== 
+   We %,rem,em
+   
+   */
+@media (min-width: 600px) {
+  .product-card {
+    float: left;
+    width: 47%;
+    margin: 0 1.5% 1.5rem 1.5%;
+  }
+
+  .featured-products::after,
+  section.product-listing::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  button[type="button"] {
+    width: auto;
+  }
+
+  a:link {
+    font-size: 1.3rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+
+/* =====================================================================
+   MEDIA QUERY 2 — min-width: 900px (tablets / small laptops)
+  ========================================= */
+@media (min-width: 900px) {
+  .hamburger {
+    display: none;
+  }
+
+  #primary-nav {
+    max-height: none; /* undo the mobile collapse */
+    overflow: visible;
+    background-color: transparent;
+  }
+
+  #primary-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  #primary-nav ul li a {
+    display: inline;
+    padding: 0;
+    border-top: none;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+  }
+
+  header {
+    padding: 2rem 4rem;
+  }
+
+  /* ---- Product cards: 3-per-row, like the original desktop layout ---- */
+  .product-card {
+    width: 30%;
+    margin: 0 1.66% 2rem 1.66%;
+  }
+
+  .featured-products {
+    padding: 3rem 4rem;
+  }
+
+  .hero {
+    padding: 4rem 4rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  /* ---- Sidebar + product listing side by side again ---- */
+  .layout-wrapper {
+    padding: 0 4rem 2rem 4rem;
+  }
+
+  .layout-wrapper::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  aside.sidebar {
+    float: left;
+    width: 22%;
+    margin: 0 3% 0 0;
+  }
+
+  section.product-listing {
+    float: left;
+    width: 75%;
+  }
+
+  /* ---- Footer columns side by side again ---- */
+  footer {
+    padding: 2.5rem 4rem;
+  }
+
+  footer .footer-column {
+    display: inline-block;
+    vertical-align: top;
+    width: 22%;
+    margin: 0 3% 0 0;
+  }
+
+  footer .footer-copy {
+    width: 16%;
+  }
+}
+
+/* =====================================================================
+   MEDIA QUERY 3 — min-width: 1200px (desktop)
+     ===================================================================== */
+@media (min-width: 1200px) {
+  header,
+  .hero,
+  .featured-products,
+  .layout-wrapper,
+  footer {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  a:link {
+    font-size: 1rem;
+  }
+}
